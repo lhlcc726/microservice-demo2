@@ -1,0 +1,25 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    nacos:
+      discovery:
+        #server-addr: localhost:8848
+        server-addr: 192.168.0.3:8888
+    gateway:
+      discovery:
+        locator:
+          enabled: true  #buid rout according to eureka services
+      routes:
+        - id: customers_routh
+          #uri: http://localhost:9001
+          uri: lb://nacos-customers-provider
+          predicates:
+            - Path=/customers/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
